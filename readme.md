@@ -27,11 +27,10 @@ Create the files to host your solution with:
 ```bash
 python -m advent_of_code <day-number> <your_name> --create
 ```
-By default it is assumed that you are working on the current edition, if you are instead on the puzzles of a different year, add the `--year` option:
-```bash
-python -m advent_of_code <day-number> <your_name> --year 2022 --create
-```
 Ta-da! The script has created four you a folder `advent_of_code/y<year>/day<day>/<your-name>/` containing files for your input, solution and tests.
+
+> [!TIP]
+> By default it is assumed that you are working on the current edition, if you are instead on the puzzles of a different year, add the `--year` option like `python -m advent_of_code <day-number> <your_name> --create --year 2022`
 
 #### Working on your solution
 To get into the action:
