@@ -14,6 +14,12 @@ If you want to run tests or develop:
 poetry install --sync --all-extras
 ```
 
+> [!NOTE]
+> From now onwards, you expected to run any `python` command within your poetry environment. This means either activating your poetry shell once by running `poetry shell` or by prepending each command with `poetry run`, so that when you see `python ...` you should run `poetry run python ...`.
+
+> [!IMPORTANT]
+> In principle this project should require no extra dependencies. If you want top add one to use in one of your solutions, make sure to install it by creating a dependency group under your name, so like `poetry add <your-dependency> --group <your-name>`.
+
 ### Working on your solution
 
 #### Creating your files
@@ -26,9 +32,6 @@ By default it is assumed that you are working on the current edition, if you are
 python -m advent_of_code <day-number> <your_name> --year 2022 --create
 ```
 Ta-da! The script has created four you a folder `advent_of_code/y<year>/day<day>/<your-name>/` containing files for your input, solution and tests.
-
-> [!IMPORTANT]
-> In principle this project should require no extra dependencies. If you want top add one to use in one of your solutions, make sure to install it by creating a dependency group under your name, so like `poetry add <your-dependency> --group <your-name>`.
 
 #### Working on your solution
 To get into the action:
