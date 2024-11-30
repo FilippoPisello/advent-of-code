@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from advent_of_code import MODULE_DIR, MODULE_NAME
+from advent_of_code import CURRENT_EDITION, MODULE_DIR, MODULE_NAME
 
 
 @dataclass
@@ -69,7 +69,7 @@ def _parse_args():
         "--year",
         type=int,
         help="The edition you are working on.",
-        default=2024,
+        default=CURRENT_EDITION,
     )
     return parser.parse_args()
 
