@@ -1,21 +1,42 @@
 import argparse
+from dataclasses import dataclass
 from importlib import import_module
+from pathlib import Path
 
 import pytest
 
-from advent_of_code import MODULE_DIR
-from advent_of_code.read_input import read_txt_input
+from advent_of_code import MODULE_DIR, MODULE_NAME
+
+
+@dataclass
+class Folder:
+    user: str
+    day: int
+    year: int
+
+    @property
+    def file_path(self) -> Path:
+        """Return the path (e.g. 'advent_of_code/2023/day1/Foo')."""
+        return MODULE_DIR / f"{self.year}/day{self.day}/{self.user}"
+
+    @property
+    def import_path(self) -> str:
+        """Return the import path (e.g. 'advent_of_code.2023.day1.Foo')."""
+        return ".".join([MODULE_NAME, str(self.year), f"day{self.day}", self.user])
 
 
 def main():
     args = _parse_args()
+    folder = Folder(args.user, args.day, args.year)
     if args.create:
-        _create_day_user_dir(args.day, args.user, args.year)
+        _create_day_user_files(folder.file_path)
+        _write_solution_template(folder.file_path)
     elif args.test:
-        run_tests(args.day, args.user, args.year)
+        pytest.main(folder.file_path / "tests.py")
     else:
+        content = (folder.file_path / "input.txt").read_text()
         function_to_call = _derive_function_name(args.part)
-        run_solution(args.day, args.user, args.year, function_to_call)
+        _run_solution(folder, function_to_call, content)
 
 
 def _parse_args():
@@ -53,12 +74,13 @@ def _parse_args():
     return parser.parse_args()
 
 
-def _create_day_user_dir(day: int, user: str, year: int) -> None:
-    user_dir = MODULE_DIR / f"{year}/day{day}/{user}"
+def _create_day_user_files(user_dir: Path) -> None:
     user_dir.mkdir(parents=True, exist_ok=True)
-    (user_dir / "solution.py").touch()
-    (user_dir / "tests.py").touch()
-    (user_dir / "input.txt").touch()
+    for file_name in ["solution.py", "tests.py", "input.txt"]:
+        (user_dir / file_name).touch()
+
+
+def _write_solution_template(user_dir: Path) -> None:
     file = open(user_dir / "solution.py", "w", encoding="utf-8")
     file.write(
         (
@@ -79,18 +101,12 @@ def _derive_function_name(part: int | None) -> str:
     return f"main_part_{digitstr[part]}"
 
 
-def run_solution(day: int, user: str, year: int, function: str) -> None:
-    problem_input = read_txt_input(day, user, year)
-    user_dir = ".".join(["advent_of_code", str(year), f"day{day}", user])
-    solution_module = import_module(user_dir + ".solution")
+def _run_solution(folder: Folder, function: str, problem_input: str) -> None:
+    solution_module = import_module(folder.import_path + ".solution")
     solution_function = getattr(solution_module, function)
-    print(f"Running '{function}' for '{user}', day '{day}'...")
+    print(f"Running '{function}' for '{folder.user}', day '{folder.day}'...")
     result = solution_function(problem_input)
     print(result)
-
-
-def run_tests(day: int, user: str, year: int) -> None:
-    pytest.main([MODULE_DIR / f"{year}/day{day}/{user}/tests.py"])
 
 
 if __name__ == "__main__":
