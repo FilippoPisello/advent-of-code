@@ -30,7 +30,7 @@ def main():
     folder = Folder(args.user, args.day, args.year)
     if args.create:
         _create_day_user_files(folder.file_path)
-        _write_solution_template(folder.file_path)
+        _write_solution_template(folder.file_path, folder.user, folder.day, folder.year)
     elif args.test:
         pytest.main(folder.file_path / "tests.py")
     else:
@@ -80,17 +80,22 @@ def _create_day_user_files(user_dir: Path) -> None:
         (user_dir / file_name).touch()
 
 
-def _write_solution_template(user_dir: Path) -> None:
+def _write_solution_template(user_dir: Path, user: str, day: int, year: int) -> None:
     file = open(user_dir / "solution.py", "w", encoding="utf-8")
     file.write(
         (
-            "def main_part_one(problem_input: str) -> None:\n"
+            f'"""Solution for day {day} of Advent of Code {year}, by {user}."""\n'
+            "\n"
+            "from typing import Any\n"
+            "\n"
+            "\n"
+            "def main_part_one(problem_input: str) -> Any:\n"
             "    return\n"
             "\n"
-            "def main_part_two(problem_input: str) -> None:\n"
+            "def main_part_two(problem_input: str) -> Any:\n"
             "    return\n"
             "\n"
-            "# def main(problem_input: str) -> None:\n"
+            "# def main(problem_input: str) -> Any:\n"
             "#    return\n"
         )
     )
