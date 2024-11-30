@@ -84,11 +84,14 @@ def _write_solution_template(user_dir: Path) -> None:
     file = open(user_dir / "solution.py", "w", encoding="utf-8")
     file.write(
         (
-            "def main_part_one(problem_input: list[str]):\n"
+            "def main_part_one(problem_input: str) -> None:\n"
             "    return\n"
             "\n"
-            "def main_part_two(problem_input: list[str]):\n"
+            "def main_part_two(problem_input: str) -> None:\n"
             "    return\n"
+            "\n"
+            "# def main(problem_input: str) -> None:\n"
+            "#    return\n"
         )
     )
     file.close()
