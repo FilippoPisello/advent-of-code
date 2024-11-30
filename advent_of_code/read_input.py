@@ -8,7 +8,7 @@ def read_txt_input(day_number: int, user: str, year: int) -> list[str]:
 
     Each line is an element of the returned list.
     """
-    input_file = ROOT / f"{year}/day{day_number}/{user}/input.txt"
+    input_file = ROOT / f"y{year}/day{day_number}/{user}/input.txt"
     content = input_file.read_text()
 
     ## uncomment for days 1 to 4 and later

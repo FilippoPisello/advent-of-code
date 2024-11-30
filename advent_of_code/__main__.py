@@ -54,7 +54,7 @@ def _parse_args():
 
 
 def _create_day_user_dir(day: int, user: str, year: int) -> None:
-    user_dir = MODULE_DIR / f"{year}/day{day}/{user}"
+    user_dir = MODULE_DIR / f"y{year}/day{day}/{user}"
     user_dir.mkdir(parents=True, exist_ok=True)
     (user_dir / "solution.py").touch()
     (user_dir / "tests.py").touch()
@@ -81,7 +81,7 @@ def _derive_function_name(part: int | None) -> str:
 
 def run_solution(day: int, user: str, year: int, function: str) -> None:
     problem_input = read_txt_input(day, user, year)
-    user_dir = ".".join(["advent_of_code", str(year), f"day{day}", user])
+    user_dir = ".".join(["advent_of_code", "y" + str(year), f"day{day}", user])
     solution_module = import_module(user_dir + ".solution")
     solution_function = getattr(solution_module, function)
     print(f"Running '{function}' for '{user}', day '{day}'...")
@@ -90,7 +90,7 @@ def run_solution(day: int, user: str, year: int, function: str) -> None:
 
 
 def run_tests(day: int, user: str, year: int) -> None:
-    pytest.main([MODULE_DIR / f"{year}/day{day}/{user}/tests.py"])
+    pytest.main([MODULE_DIR / f"y{year}/day{day}/{user}/tests.py"])
 
 
 if __name__ == "__main__":
