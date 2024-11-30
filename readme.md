@@ -35,7 +35,7 @@ To get into the action:
   - Doing all in one step, in that case you want to uncomment the `main` function just below.
 
 > [!NOTE]
-> Your solution functions should:
+> Your solution function(s) should:
 > - Accept a `problem_input` argument, containing the entire raw content of your input file as a single `str`.
 > - Return whatever output you get to.
 
