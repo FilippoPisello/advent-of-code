@@ -16,13 +16,13 @@ class Folder:
 
     @property
     def file_path(self) -> Path:
-        """Return the path (e.g. 'advent_of_code/2023/day1/Foo')."""
-        return MODULE_DIR / f"{self.year}/day{self.day}/{self.user}"
+        """Return the path (e.g. 'advent_of_code/y2023/day1/Foo')."""
+        return MODULE_DIR / f"y{self.year}/day{self.day}/{self.user}"
 
     @property
     def import_path(self) -> str:
-        """Return the import path (e.g. 'advent_of_code.2023.day1.Foo')."""
-        return ".".join([MODULE_NAME, str(self.year), f"day{self.day}", self.user])
+        """Return the import path (e.g. 'advent_of_code.y2023.day1.Foo')."""
+        return f"{MODULE_NAME}.y{self.year}.day{self.day}.{self.user}"
 
 
 def main():
