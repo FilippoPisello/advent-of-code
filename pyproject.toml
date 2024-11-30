@@ -1,0 +1,13 @@
+[tool.poetry]
+package-mode = false
+name = "advent-of-code"
+description = "CLI to store and run Advent of Code puzzles"
+authors = ["Filippo Pisello"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "~=3.11.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "~=24.10"
+pytest = "~=8.3"
