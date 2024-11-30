@@ -80,7 +80,7 @@ def _derive_function_name(part: int | None) -> str:
 
 
 def run_solution(day: int, user: str, year: int, function: str) -> None:
-    problem_input = read_txt_input(day, user)
+    problem_input = read_txt_input(day, user, year)
     user_dir = ".".join(["advent_of_code", str(year), f"day{day}", user])
     solution_module = import_module(user_dir + ".solution")
     solution_function = getattr(solution_module, function)
