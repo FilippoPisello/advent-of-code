@@ -27,6 +27,9 @@ python -m advent_of_code <day-number> <your_name> --year 2022 --create
 ```
 Ta-da! The script has created four you a folder `advent_of_code/y<year>/day<day>/<your-name>/` containing files for your input, solution and tests.
 
+> [!IMPORTANT]
+> In principle this project should require no extra dependencies. If you want top add one to use in one of your solutions, make sure to install it by creating a dependency group under your name, so like `poetry add <your-dependency> --group <your-name>`.
+
 #### Working on your solution
 To get into the action:
 - Copy-paste the content of your daily input into the corresponding file like `advent_of_code/y<year>/day<day>/<your-name>/input.txt`.
