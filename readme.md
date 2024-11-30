@@ -18,7 +18,7 @@ poetry install --sync --all-extras
 > From now onwards, you expected to run any `python` command within your poetry environment. This means either activating your poetry shell once by running `poetry shell` or by prepending each command with `poetry run`, so that when you see `python ...` you should run `poetry run python ...`.
 
 > [!IMPORTANT]
-> In principle this project should require no extra dependencies. If you want top add one to use in one of your solutions, make sure to install it by creating a dependency group under your name, so like `poetry add <your-dependency> --group <your-name>`. You can check what "current edition" means by looking at the value of `CURRENT_EDITION` variable in `advent_of_code/__init__.py`.
+> In principle this project should require no extra dependencies. If you want top add one to use in one of your solutions, make sure to install it by creating a dependency group under your name, so like `poetry add <your-dependency> --group <your-name>`.
 
 ### Working on your solution
 
