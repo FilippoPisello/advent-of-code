@@ -1,61 +1,67 @@
-# Advent of Code 2023
+# Advent of Code
 
-Hosting the solutions for Advent of Code 2023 for some members of Picnic Technologies France.
+Store the Advent of Code solutions of the analysts of Picnic France and beyond! Provides a couple of CLI functionalities to make life just a bit simpler to jump right into the puzzles!
 
 ## How to use
 
-### Folder structure
-You can automatically create your starting files for a given day using the command:
+### Installing the project
+This project uses poetry, to install what is needed to run solutions run:
+```
+poetry install --sync
+```
+If you want to run tests or develop:
+```
+poetry install --sync --all-extras
+```
+
+### Working on your solution
+
+#### Creating your files
+Create the files to host your solution with:
 ```bash
 python -m advent_of_code <day-number> <your_name> --create
 ```
+By default it is assumed that you are working on the current edition, if you are instead on the puzzles of a different year, add the `--year` option:
+```bash
+python -m advent_of_code <day-number> <your_name> --year 2022 --create
+```
+Ta-da! The script has created four you a folder `advent_of_code/y<year>/day<day>/<your-name>/` containing files for your input, solution and tests.
 
-It will create your files following the structure below:
-
-- A folder in `advent_of_code/` named `day<number>`, unless already existing.
-- A folder in `advent_of_code/day<number>/` named `<your-name>`.
-- Four files:
-  - `advent_of_code/day<number>/<your-name>/__init__.py`
-  - `advent_of_code/day<number>/<your-name>/solution.py`
-  - `advent_of_code/day<number>/<your-name>/input.txt`
-  - [Optional] `advent_of_code/day<number>/<your-name>/tests.py`
+#### Working on your solution
+To get into the action:
+- Copy-paste the content of your daily input into the corresponding file like `advent_of_code/y<year>/day<day>/<your-name>/input.txt`.
+- Write your solution either by:
+  - Tackling the two parts individually, thus filling in separately `main_part_one` and `main_part_two`.
+  - Doing all in one step, in that case you want to uncomment the `main` function just below.
 
 > [!NOTE]
-> You are expected to copy-paste the content of your daily input into `input.txt`
+> Your solution function(s) should:
+> - Accept a `problem_input` argument, containing the entire raw content of your input file as a single `str`.
+> - Return whatever output you get to.
 
-### File structure
+#### Running your solution
 
-File `advent_of_code/day<number>/<your-name>/solution.py` should contain either:
-
-- A function called `main`: if you opt for a setup where you use one function for both parts.
-- At least one function between `main_part_one` and `main_part_two`: if you want to have distinct functions for the two parts, so that you can run each independently.
-
-Anyway, all of these functions must respect the following:
-
-- Takes a single argument `problem_input`, which is a `list[str]` where each element corresponds to a line of the original problem input.
-- Return whatever the result of your solution is.
-
-
-### Running your solution
-
-By setting up as described, you can run your solutions as described below. The script will take care of feeding the input for the right day to your solution and print its result.
-
-In case you opted for a single `main` function, use:
-
-```bash
-python -m advent_of_code <day-number> <your_name>
-```
-
-Otherwise, to run a part specific main, use:
-
+You can easily run your solution and get your output directly in the terminal.
+If you sticked to the two-parts approach, run:
 ```bash
 python -m advent_of_code <day-number> <your_name> --part <1 or 2>
 ```
 
-### Running tests
+In case you opted for a single `main` function, run instead:
+```bash
+python -m advent_of_code <day-number> <your_name>
+```
 
-You can also run your tests by using the keyword `--test`:
+> [!NOTE]
+> If you are solving for a different year, also pass `--year 2022`
+
+#### Testing
+
+You can run your tests as follows:
 
 ```bash
 python -m advent_of_code <day-number> <your_name> --test
 ```
+
+> [!NOTE]
+> If you are solving for a different year, also pass `--year 2022`
