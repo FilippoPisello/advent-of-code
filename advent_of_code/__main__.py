@@ -10,12 +10,12 @@ from advent_of_code.read_input import read_txt_input
 def main():
     args = _parse_args()
     if args.create:
-        _create_day_user_dir(args.day, args.user)
+        _create_day_user_dir(args.day, args.user, args.year)
     elif args.test:
-        run_tests(args.day, args.user)
+        run_tests(args.day, args.user, args.year)
     else:
         function_to_call = _derive_function_name(args.part)
-        run_solution(args.day, args.user, function_to_call)
+        run_solution(args.day, args.user, args.year, function_to_call)
 
 
 def _parse_args():
@@ -44,11 +44,17 @@ def _parse_args():
         help="Create a new user directory.",
         default=False,
     )
+    parser.add_argument(
+        "--year",
+        type=int,
+        help="The edition you are working on.",
+        default=2024,
+    )
     return parser.parse_args()
 
 
-def _create_day_user_dir(day: int, user: str):
-    user_dir = MODULE_DIR / f"day{day}" / user
+def _create_day_user_dir(day: int, user: str, year: int) -> None:
+    user_dir = MODULE_DIR / f"{year}/day{day}/{user}"
     user_dir.mkdir(parents=True, exist_ok=True)
     (user_dir / "solution.py").touch()
     (user_dir / "tests.py").touch()
@@ -73,9 +79,9 @@ def _derive_function_name(part: int | None) -> str:
     return f"main_part_{digitstr[part]}"
 
 
-def run_solution(day: int, user: str, function: str):
+def run_solution(day: int, user: str, year: int, function: str) -> None:
     problem_input = read_txt_input(day, user)
-    user_dir = ".".join(["advent_of_code", f"day{day}", user])
+    user_dir = ".".join(["advent_of_code", str(year), f"day{day}", user])
     solution_module = import_module(user_dir + ".solution")
     solution_function = getattr(solution_module, function)
     print(f"Running '{function}' for '{user}', day '{day}'...")
@@ -83,8 +89,8 @@ def run_solution(day: int, user: str, function: str):
     print(result)
 
 
-def run_tests(day: int, user: str):
-    pytest.main([MODULE_DIR / f"day{day}" / user / "tests.py"])
+def run_tests(day: int, user: str, year: int) -> None:
+    pytest.main([MODULE_DIR / f"{year}/day{day}/{user}/tests.py"])
 
 
 if __name__ == "__main__":
