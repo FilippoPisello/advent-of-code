@@ -36,8 +36,8 @@ Ta-da! The script has created four you a folder `advent_of_code/y<year>/day<day>
 To get into the action:
 - Copy-paste the content of your daily input into the corresponding file like `advent_of_code/y<year>/day<day>/<your-name>/input.txt`.
 - Write your solution either by:
-  - Tackling the two parts individually, thus filling in separately `main_part_one` and `main_part_two`.
-  - Doing all in one step, in that case you want to uncomment the `main` function just below.
+  - Tackling the two parts individually, thus filling in separately `main_part_one(...)` and `main_part_two(...)`.
+  - Doing all in one step, in that case you want to uncomment the `main(...)` function just below.
 
 > [!NOTE]
 > Your solution function(s) should:
@@ -47,7 +47,7 @@ To get into the action:
 #### Running your solution
 
 You can easily run your solution and get your output directly in the terminal.
-If you sticked to the two-parts approach, run:
+If you stuck to the two-parts approach, run:
 ```bash
 python -m advent_of_code <day-number> <your_name> --part <1 or 2>
 ```
