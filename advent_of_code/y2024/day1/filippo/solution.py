@@ -31,7 +31,3 @@ def main_part_two(problem_input: str) -> Any:
             occurrence = 0
         result += number * occurrence
     return result
-
-
-# def main(problem_input: str) -> Any:
-#    return
