@@ -23,11 +23,5 @@ def _parse_input_to_left_right_lists(problem_input) -> tuple[list[int], list[int
 def main_part_two(problem_input: str) -> Any:
     left_list, right_list = _parse_input_to_left_right_lists(problem_input)
     right_counter = Counter(right_list)
-    result = 0
-    for number in left_list:
-        try:
-            occurrence = right_counter[number]
-        except KeyError:
-            occurrence = 0
-        result += number * occurrence
-    return result
+    # Result is the sum of left numbers times their occurrences in the right list
+    return sum(number * right_counter.get(number, 0) for number in left_list)
