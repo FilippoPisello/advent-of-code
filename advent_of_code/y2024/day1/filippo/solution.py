@@ -9,10 +9,8 @@ def main_part_one(problem_input: str) -> Any:
         left, right = line.split("   ")
         left_list.append(int(left))
         right_list.append(int(right))
-    sorted_left_list = sorted(left_list)
-    sorted_right_list = sorted(right_list)
     return sum(
-        abs(left - right) for left, right in zip(sorted_left_list, sorted_right_list)
+        abs(left - right) for left, right in zip(sorted(left_list), sorted(right_list))
     )
 
 
