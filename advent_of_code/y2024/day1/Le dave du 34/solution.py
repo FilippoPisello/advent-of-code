@@ -7,7 +7,6 @@ with open("input.txt", "r") as file:
 right_side = []
 left_side = []
 
-
 for i in data:
     left, right = i.split()
     left_side.append(int(left))
@@ -21,14 +20,10 @@ distance = 0
 for i in range(len(left_side)):
     distance += abs(left_side[i-1] - right_side[i-1])
 
-
-
-
 similarity = 0
 
 for position_left_side_tmtc_la_famille in left_side:
     similarity += position_left_side_tmtc_la_famille * right_side.count(position_left_side_tmtc_la_famille)
-
 
 t1= time.time()
 
