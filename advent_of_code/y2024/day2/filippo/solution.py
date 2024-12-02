@@ -8,20 +8,23 @@ def main_part_one(problem_input: str) -> Any:
 
     for report in problem_input.splitlines():
         numbers = [int(x) for x in report.split(" ")]
-        is_incremental = True
-        is_decremental = True
-        is_acceptable_difference = True
-        for index in range(1, len(numbers)):
-            if numbers[index] >= numbers[index - 1]:
-                is_decremental = False
-            elif numbers[index] <= numbers[index - 1]:
-                is_incremental = False
-            diff_with_previous = numbers[index] - numbers[index - 1]
-            if (abs(diff_with_previous) > 3) or (abs(diff_with_previous) == 0):
-                is_acceptable_difference = False
-        if (is_incremental or is_decremental) and is_acceptable_difference:
-            count_valid += 1
+        count_valid += _is_report_valid(numbers)
     return count_valid
+
+
+def _is_report_valid(numbers: list[int]) -> int:
+    is_incremental = True
+    is_decremental = True
+    is_acceptable_difference = True
+    for index in range(1, len(numbers)):
+        if numbers[index] >= numbers[index - 1]:
+            is_decremental = False
+        elif numbers[index] <= numbers[index - 1]:
+            is_incremental = False
+        distance_from_previous = abs(numbers[index] - numbers[index - 1])
+        if (distance_from_previous > 3) or (distance_from_previous == 0):
+            is_acceptable_difference = False
+    return int((is_incremental or is_decremental) and is_acceptable_difference)
 
 
 def main_part_two(problem_input: str) -> Any:
