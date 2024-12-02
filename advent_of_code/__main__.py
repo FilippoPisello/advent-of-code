@@ -1,4 +1,7 @@
+"""Core logic."""
+
 import argparse
+import time
 from dataclasses import dataclass
 from importlib import import_module
 from pathlib import Path
@@ -113,8 +116,11 @@ def _run_solution(folder: Folder, function: str, problem_input: str) -> None:
     solution_module = import_module(folder.import_path + ".solution")
     solution_function = getattr(solution_module, function)
     print(f"Running '{function}' for '{folder.user}', day '{folder.day}'...")
+    t0 = time.monotonic()
     result = solution_function(problem_input)
-    print(result)
+    t1 = time.monotonic()
+    print(f"Result: {result}")
+    print(f"Executed in {t1 - t0:.5f} seconds")
 
 
 if __name__ == "__main__":
