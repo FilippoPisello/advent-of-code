@@ -14,9 +14,6 @@ If you want to run tests or develop:
 poetry install --sync --all-extras
 ```
 
-> [!NOTE]
-> From now onwards, you expected to run any `python` command within your poetry environment. This means either activating your poetry shell once by running `poetry shell` or by prepending each command with `poetry run`, so that when you see `python ...` you should run `poetry run python ...`.
-
 > [!IMPORTANT]
 > In principle this project should require no extra dependencies. If you want top add one to use in one of your solutions, make sure to install it by creating a dependency group under your name, so like `poetry add <your-dependency> --group <your-name>`.
 
@@ -25,7 +22,7 @@ poetry install --sync --all-extras
 #### Creating your files
 Create the files to host your solution with:
 ```bash
-python -m advent_of_code <day-number> <your_name> --create
+poetry run python -m advent_of_code <day-number> <your_name> --create
 ```
 Ta-da! The script has created four you a folder `advent_of_code/y<year>/day<day>/<your-name>/` containing files for your input, solution and tests.
 
@@ -49,12 +46,12 @@ To get into the action:
 You can easily run your solution and get your output directly in the terminal.
 If you stuck to the two-parts approach, run:
 ```bash
-python -m advent_of_code <day-number> <your_name> --part <1 or 2>
+poetry run python -m advent_of_code <day-number> <your_name> --part <1 or 2>
 ```
 
 In case you opted for a single `main` function, run instead:
 ```bash
-python -m advent_of_code <day-number> <your_name>
+poetry run python -m advent_of_code <day-number> <your_name>
 ```
 
 > [!NOTE]
@@ -65,7 +62,7 @@ python -m advent_of_code <day-number> <your_name>
 You can run your tests as follows:
 
 ```bash
-python -m advent_of_code <day-number> <your_name> --test
+poetry run python -m advent_of_code <day-number> <your_name> --test
 ```
 
 > [!NOTE]
