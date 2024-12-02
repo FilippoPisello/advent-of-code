@@ -28,7 +28,19 @@ def _is_report_valid(numbers: list[int]) -> int:
 
 
 def main_part_two(problem_input: str) -> Any:
-    return
+    count_valid = 0
+
+    for report in problem_input.splitlines():
+        numbers = [int(x) for x in report.split(" ")]
+        alternative_inputs = []
+        for index in range(len(numbers)):
+            alternative_inputs.append(numbers[:index] + numbers[index + 1 :])
+        is_valid = []
+        for rep in [numbers] + alternative_inputs:
+            is_valid.append(_is_report_valid(rep))
+        count_valid += max(is_valid)
+
+    return count_valid
 
 
 # def main(problem_input: str) -> Any:
