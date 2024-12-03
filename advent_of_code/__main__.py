@@ -8,7 +8,12 @@ from pathlib import Path
 
 import pytest
 
-from advent_of_code import CURRENT_EDITION, MODULE_DIR, MODULE_NAME
+from advent_of_code import (
+    CURRENT_EDITION,
+    MODULE_DIR,
+    MODULE_NAME,
+    SOLUTION_TEMPLATE_PATH,
+)
 
 
 @dataclass
@@ -33,7 +38,9 @@ def main():
     folder = Folder(args.user, args.day, args.year)
     if args.create:
         _create_day_user_files(folder.file_path)
-        _write_solution_template(folder.file_path, folder.user, folder.day, folder.year)
+        _write_solution_placeholder(
+            folder.file_path, folder.user, folder.day, folder.year
+        )
     elif args.test:
         pytest.main(folder.file_path / "tests.py")
     else:
@@ -83,25 +90,10 @@ def _create_day_user_files(user_dir: Path) -> None:
         (user_dir / file_name).touch()
 
 
-def _write_solution_template(user_dir: Path, user: str, day: int, year: int) -> None:
+def _write_solution_placeholder(user_dir: Path, user: str, day: int, year: int) -> None:
     file = open(user_dir / "solution.py", "w", encoding="utf-8")
-    file.write(
-        (
-            f'"""Solution for day {day} of Advent of Code {year}, by {user}."""\n'
-            "\n"
-            "from typing import Any\n"
-            "\n"
-            "\n"
-            "def main_part_one(problem_input: str) -> Any:\n"
-            "    return\n"
-            "\n"
-            "def main_part_two(problem_input: str) -> Any:\n"
-            "    return\n"
-            "\n"
-            "# def main(problem_input: str) -> Any:\n"
-            "#    return\n"
-        )
-    )
+    content = SOLUTION_TEMPLATE_PATH.read_text().format(user=user, day=day, year=year)
+    file.write(content)
     file.close()
 
 
