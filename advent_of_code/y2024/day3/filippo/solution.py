@@ -3,7 +3,7 @@
 import re
 from typing import Any
 
-MUL_PATTERN = r"mul\((\d+),(\d+)\)"
+MUL_PATTERN = r"mul\((\d{1,3}),(\d{1,3})\)"
 
 
 def main_part_one(problem_input: str) -> Any:
