@@ -22,6 +22,9 @@ def test_cases_part_one(problem_input, expected):
         ("mul(2,4)", 8),
         ("do()mul(2,4)", 8),
         ("don't()mul(2,4)", 0),
+        ("don't()don't()mul(2,4)", 0),
+        ("don't()do()don't()mul(2,4)", 0),
+        ("don't()do()mul(2,4)don't()mul(2,4)", 8),
     ),
 )
 def test_cases_part_two(problem_input, expected):
