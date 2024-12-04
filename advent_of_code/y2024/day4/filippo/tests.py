@@ -7,6 +7,7 @@ from advent_of_code.y2024.day4.filippo.solution import main_part_one, main_part_
     ("problem_input", "expected"),
     (
         ("XMAS", 1),
+        ("SAMX", 1),
         ("XXMAS", 1),
         ("XXMASS", 1),
         ("SAMX", 1),
