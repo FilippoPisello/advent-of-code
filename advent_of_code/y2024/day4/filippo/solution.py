@@ -1,6 +1,7 @@
 """Solution for day 4 of Advent of Code 2024, by filippo."""
 
 import re
+from collections import Counter
 from typing import Any
 
 
@@ -55,7 +56,34 @@ def _get_diagonal_slices(text: str) -> list[str]:
 
 
 def main_part_two(problem_input: str) -> Any:
-    return
+    lines = problem_input.splitlines()
+    matches = 0
+    for y, line in enumerate(lines):
+        for x, char in enumerate(line):
+            if char != "A":
+                continue
+            try:
+                square = [
+                    lines[y - 1][x - 1 : x + 2],
+                    lines[y][x - 1 : x + 2],
+                    lines[y + 1][x - 1 : x + 2],
+                ]
+                slices = [
+                    # Straight
+                    square[0][1] + square[1][1] + square[2][1],
+                    square[1][0] + square[1][1] + square[1][2],
+                    # Diagonal
+                    square[0][0] + square[1][1] + square[2][2],
+                    square[0][2] + square[1][1] + square[2][0],
+                ]
+            except IndexError:
+                continue
+            inner_matches = 0
+            for _slice in slices:
+                inner_matches += int(_slice == "MAS" or _slice == "MAS"[::-1])
+            if inner_matches >= 2:
+                matches += 1
+    return matches
 
 
 # def main(problem_input: str) -> Any:
