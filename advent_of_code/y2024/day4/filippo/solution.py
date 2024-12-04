@@ -1,45 +1,61 @@
 """Solution for day 4 of Advent of Code 2024, by filippo."""
 
+import re
 from typing import Any
 
 
 def main_part_one(problem_input: str) -> Any:
-    lines = "XMAS".splitlines()
+    problem_input = problem_input.replace(" ", "")
+    slices = (
+        _get_horizontal_slices(problem_input)
+        + _get_vertical_slices(problem_input)
+        + _get_diagonal_slices(problem_input)
+    )
     count = 0
-    for y, line in enumerate(lines):
-        for x, char in enumerate(line):
-            if char != "X":
-                continue
-            indexes_to_check = (
-                ((1, 0), (2, 0), (3, 0)),
-                ((-1, 0), (-2, 0), (-3, 0)),
-                ((0, 1), (0, 2), (0, 3)),
-                ((0, -1), (0, -2), (0, -3)),
-                ((1, 1), (2, 2), (3, 3)),
-                ((-1, -1), (-2, -2), (-3, -3)),
-                ((1, -1), (2, -2), (3, -3)),
-                ((-1, 1), (-2, 2), (-3, 3)),
-            )
-            count += _check_indexes(lines, x, y, indexes_to_check)
+    for _slice in slices:
+        count += len(re.findall("XMAS", _slice))
+        count += len(re.findall("XMAS"[::-1], _slice))
     return count
 
 
-def _check_indexes(
-    lines: list[str],
-    x: int,
-    y: int,
-    variations: tuple[tuple[tuple[int, int], ...], ...],
-) -> int:
-    count = 0
-    for variation in variations:
-        indexes = [(x + i, y + j) for i, j in variation]
-        try:
-            letters = [lines[j][i] for i, j in indexes]
-            if letters == ["M", "A", "S"]:
-                count += 1
-        except IndexError:
-            continue
-    return count
+def _get_horizontal_slices(text: str) -> list[str]:
+    return text.splitlines()
+
+
+def _get_vertical_slices(text: str) -> list[str]:
+    rows = text.splitlines()
+    slices = []
+    for x, _ in enumerate(rows[0]):
+        _slice = ""
+        for row in rows:
+            _slice += row[x]
+        slices.append(_slice)
+    return slices
+
+
+def _get_diagonal_slices(text: str) -> list[str]:
+    rows = text.splitlines()
+    slices = []
+    y = len(rows)
+    x = 0
+    while x <= len(rows[0]):
+        _slice = ""
+        _inverse_slice = ""
+        i = 0
+        while True:
+            try:
+                _slice += rows[y + i][x + i]
+                _inverse_slice += rows[y + i][::-1][x + i]
+                i += 1
+            except IndexError:
+                slices.append(_slice)
+                slices.append(_inverse_slice)
+                if y > 0:
+                    y -= 1
+                else:
+                    x += 1
+                break
+    return slices
 
 
 def main_part_two(problem_input: str) -> Any:

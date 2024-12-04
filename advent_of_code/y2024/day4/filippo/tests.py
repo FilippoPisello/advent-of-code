@@ -1,6 +1,10 @@
 import pytest
 
-from advent_of_code.y2024.day4.filippo.solution import main_part_one, main_part_two
+from advent_of_code.y2024.day4.filippo.solution import (
+    _get_vertical_slices,
+    main_part_one,
+    main_part_two,
+)
 
 
 @pytest.mark.parametrize(
@@ -13,27 +17,28 @@ from advent_of_code.y2024.day4.filippo.solution import main_part_one, main_part_
         ("SAMX", 1),
         ("SSAMX", 1),
         (
-            """
-         XXXX
-         MXXX
-         AXXX
-         SXXX
-         """,
+            ("XXXX\n" + "MXXX\n" + "AXXX\n" + "SXXX"),
             1,
         ),
         (
-            """
-            MMMSXXMASM
-            MSAMXMSMSA
-            AMXSXMAAMM
-            MSAMASMSMX
-            XMASAMXAMM
-            XXAMMXXAMA
-            SMSMSASXSS
-            SAXAMASAAA
-            MAMMMXMMMM
-            MXMXAXMASX
-            """,
+            ("XXXX\n" + "XMXX\n" + "XXAX\n" + "XXXS"),
+            1,
+        ),
+        (
+            ("XXXX\n" + "XXMX\n" + "XAXX\n" + "SXXX"),
+            1,
+        ),
+        (
+            "MMMSXXMASM\n"
+            + "MSAMXMSMSA\n"
+            + "AMXSXMAAMM\n"
+            + "MSAMASMSMX\n"
+            + "XMASAMXAMM\n"
+            + "XXAMMXXAMA\n"
+            + "SMSMSASXSS\n"
+            + "SAXAMASAAA\n"
+            + "MAMMMXMMMM\n"
+            + "MXMXAXMASX\n",
             18,
         ),
     ),
