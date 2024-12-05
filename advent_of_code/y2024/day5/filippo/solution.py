@@ -48,24 +48,24 @@ def main_part_two(problem_input: str) -> Any:
     for update in updates:
         if _is_valid(update, rules):
             continue
-        sorted_update = _fix_sorting(update, rules)
-        median_index = len(sorted_update) // 2
-        counter += int(sorted_update[median_index])
+        while not _is_valid(update, rules):
+            update = _fix_sorting(update, rules)
+        median_index = len(update) // 2
+        counter += int(update[median_index])
     return counter
 
 
 def _fix_sorting(update: list[str], rules: dict[str, set[str]]) -> list[str]:
-    for _ in range(1000):
-        for value, cannot_be_before in rules.items():
-            try:
-                index_value = update.index(value)
-            except ValueError:
+    for value, cannot_be_before in rules.items():
+        try:
+            index_value = update.index(value)
+        except ValueError:
+            continue
+        for val in cannot_be_before:
+            if val not in update[:index_value]:
                 continue
-            for val in cannot_be_before:
-                if val not in update[:index_value]:
-                    continue
-                update.remove(val)
-                update.insert(index_value, val)
+            update.remove(val)
+            update.insert(index_value, val)
     return update
 
 
