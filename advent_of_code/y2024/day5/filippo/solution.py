@@ -13,7 +13,9 @@ def main_part_one(problem_input: str) -> Any:
     return counter
 
 
-def extract_rules_and_updates(problem_input) -> tuple[dict[str, set[str]], list[str]]:
+def extract_rules_and_updates(
+    problem_input,
+) -> tuple[dict[str, set[str]], list[list[str]]]:
     rules, updates = problem_input.split("\n\n")
     rules = _parse_rules(rules)
     updates = [update.split(",") for update in updates.split("\n")]
