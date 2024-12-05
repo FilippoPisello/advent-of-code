@@ -18,3 +18,16 @@ SAMPLE_INPUT_PATH = Path(__file__).resolve().parent / "sample_input.txt"
 )
 def test_cases_part_one(problem_input, expected):
     assert main_part_one(problem_input) == expected
+
+
+@pytest.mark.parametrize(
+    ("problem_input", "expected"),
+    (
+        (
+            SAMPLE_INPUT_PATH.read_text(),
+            123,
+        ),
+    ),
+)
+def test_cases_part_two(problem_input, expected):
+    assert main_part_two(problem_input) == expected
