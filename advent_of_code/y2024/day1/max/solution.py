@@ -40,7 +40,7 @@ def _parse_array(input: str) -> tuple[list[int], list[int]]:
 
         left_array.append(int(left))
         right_array.append(int(right))
-    
+
     return left_array, right_array
 
 
