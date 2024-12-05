@@ -10,10 +10,10 @@
             "request": "launch",
             "module": "advent_of_code",
             "args": [
-                "<DAY_NUMBER>",
-                "<YOUR_NAME>",
+                "4",
+                "filippo",
                 "--part",
-                "<1 or 2>"
+                "1"
             ]
         }
     ]
