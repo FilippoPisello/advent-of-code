@@ -31,7 +31,6 @@ def main_part_one(problem_input: str) -> Any:
         else:
             current_coordinates = tentative_new_coordinates
             walked_coordinates.add(current_coordinates)
-        # _map = write_map(rows, walked_coordinates, current_coordinates, direction)
 
     return len(walked_coordinates)
 
@@ -88,7 +87,10 @@ def write_map(
         for x, cell in enumerate(row):
             if (x, y) == current_coordinates:
                 map[y] = map[y][:x] + directions[direction] + map[y][x + 1 :]
-            elif (x, y) in walked_coordinates:
+            elif (x, y) in walked_coordinates or (
+                (x, y),
+                direction,
+            ) in walked_coordinates:
                 map[y] = map[y][:x] + "X" + map[y][x + 1 :]
     with open(MAP_PATH, "w", encoding="utf-8") as f:
         f.write("\n".join(map))
@@ -96,7 +98,47 @@ def write_map(
 
 
 def main_part_two(problem_input: str) -> Any:
-    return
+    rows = problem_input.splitlines()
+
+    counter = 0
+    for y, row in enumerate(rows):
+        for x, cell in enumerate(row):
+            if cell == "#" or cell == "^":
+                continue
+
+            current_coordinates = _find_starting_coordinates(rows)
+            direction = "up"
+            walked_coordinates = set()
+            walked_coordinates.add((current_coordinates, direction))
+            alternative_map = _alter_map(rows, (x, y), "#")
+            while True:
+                tentative_new_coordinates = _find_next_destination(
+                    current_coordinates, direction
+                )
+                if (tentative_new_coordinates, direction) in walked_coordinates:
+                    counter += 1
+                    break
+                if _is_out_of_bounds(alternative_map, tentative_new_coordinates):
+                    break
+                if _is_obstacle(alternative_map, tentative_new_coordinates):
+                    direction = _turn_right(direction)
+                else:
+                    current_coordinates = tentative_new_coordinates
+                    walked_coordinates.add((current_coordinates, direction))
+    return counter
+
+
+def _alter_map(
+    rows: list[str], coordinates: tuple[int, int], character: str
+) -> list[str]:
+    return [
+        (
+            row[: coordinates[0]] + character + row[coordinates[0] + 1 :]
+            if y == coordinates[1]
+            else row
+        )
+        for y, row in enumerate(rows)
+    ]
 
 
 # def main(problem_input: str) -> Any:
