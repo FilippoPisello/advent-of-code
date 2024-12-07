@@ -10,10 +10,10 @@
             "request": "launch",
             "module": "advent_of_code",
             "args": [
-                "4",
-                "filippo",
+                "7",
+                "david",
                 "--part",
-                "1"
+                "2"
             ]
         }
     ]
