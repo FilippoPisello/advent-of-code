@@ -67,3 +67,7 @@ poetry run python -m advent_of_code <day-number> <your_name> --test
 
 > [!NOTE]
 > If you are solving for a different year, also pass `--year 2022`
+
+The creation script writes some boilerplate to allow you to easily test against the sample test case provided together with the problem statement. To check if your solution works against it, just:
+- Copy paste the sample input in `sample_input.txt`
+- Replace the expected output in the two tests in `tests.py`
