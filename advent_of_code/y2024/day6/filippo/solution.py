@@ -1,5 +1,7 @@
 """Solution for day 6 of Advent of Code 2024, by filippo."""
 
+from pathlib import Path
+from time import sleep
 from typing import Any
 
 DIRECTIONS = {
@@ -8,6 +10,7 @@ DIRECTIONS = {
     "down": (0, 1),
     "left": (-1, 0),
 }
+MAP_PATH = Path(__file__).resolve().parent / "map.txt"
 
 
 def main_part_one(problem_input: str) -> Any:
@@ -28,6 +31,7 @@ def main_part_one(problem_input: str) -> Any:
         else:
             current_coordinates = tentative_new_coordinates
             walked_coordinates.add(current_coordinates)
+        # _map = write_map(rows, walked_coordinates, current_coordinates, direction)
 
     return len(walked_coordinates)
 
@@ -48,11 +52,14 @@ def _find_starting_coordinates(rows: list[str]) -> tuple[int, int]:
 
 
 def _is_out_of_bounds(rows: list[str], coordinates: tuple[int, int]) -> bool:
-    try:
-        rows[coordinates[1]][coordinates[0]]
-        return False
-    except IndexError:
+    if (
+        coordinates[1] < 0
+        or coordinates[1] >= len(rows)
+        or coordinates[0] < 0
+        or coordinates[0] >= len(rows[0])
+    ):
         return True
+    return False
 
 
 def _is_obstacle(rows: list[str], coordinates: tuple[int, int]) -> bool:
@@ -60,14 +67,32 @@ def _is_obstacle(rows: list[str], coordinates: tuple[int, int]) -> bool:
 
 
 def _turn_right(direction: str) -> str:
-    if direction == "up":
-        return "right"
-    if direction == "right":
-        return "down"
-    if direction == "down":
-        return "left"
-    if direction == "left":
-        return "up"
+    directions = list(DIRECTIONS.keys())
+    return directions[(directions.index(direction) + 1) % len(directions)]
+
+
+def write_map(
+    rows: list[str],
+    walked_coordinates: set[tuple[int, int]],
+    current_coordinates: tuple[int, int],
+    direction: str,
+) -> list[str]:
+    directions = {
+        "up": "^",
+        "right": ">",
+        "down": "v",
+        "left": "<",
+    }
+    map = rows.copy()
+    for y, row in enumerate(rows):
+        for x, cell in enumerate(row):
+            if (x, y) == current_coordinates:
+                map[y] = map[y][:x] + directions[direction] + map[y][x + 1 :]
+            elif (x, y) in walked_coordinates:
+                map[y] = map[y][:x] + "X" + map[y][x + 1 :]
+    with open(MAP_PATH, "w", encoding="utf-8") as f:
+        f.write("\n".join(map))
+    return map
 
 
 def main_part_two(problem_input: str) -> Any:
