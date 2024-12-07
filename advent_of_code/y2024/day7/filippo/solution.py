@@ -21,6 +21,8 @@ def main(
             actual_result = sum(
                 (operation(actual_result, factor) for operation in operations), []
             )
+            # No need to keep calculating if already beyond the target
+            actual_result = [x for x in actual_result if x <= wanted_result]
 
         if wanted_result in actual_result:
             valid += wanted_result
