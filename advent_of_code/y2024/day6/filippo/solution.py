@@ -35,6 +35,41 @@ def main_part_one(problem_input: str) -> Any:
     return len(walked_coordinates)
 
 
+def main_part_two(problem_input: str) -> Any:
+    rows = problem_input.splitlines()
+
+    loops_counter = 0
+
+    #  Insert an obstacle in every empty cell and check if we are in a loop
+    for y, row in enumerate(rows):
+        for x, cell in enumerate(row):
+            if cell == "#" or cell == "^":
+                continue
+
+            current_coordinates = _find_starting_coordinates(rows)
+            direction = "up"
+            walked_coordinates = set()
+            walked_coordinates.add((current_coordinates, direction))
+            alternative_map = _alter_map(rows, (x, y), "#")
+            while True:
+                tentative_new_coordinates = _find_next_destination(
+                    current_coordinates, direction
+                )
+                # If we are about to get back to a point already visited, with
+                # the same direction, we are in a loop
+                if (tentative_new_coordinates, direction) in walked_coordinates:
+                    loops_counter += 1
+                    break
+                if _is_out_of_bounds(alternative_map, tentative_new_coordinates):
+                    break
+                if _is_obstacle(alternative_map, tentative_new_coordinates):
+                    direction = _turn_right(direction)
+                else:
+                    current_coordinates = tentative_new_coordinates
+                    walked_coordinates.add((current_coordinates, direction))
+    return loops_counter
+
+
 def _find_next_destination(current_coordinates, direction):
     return (
         current_coordinates[0] + DIRECTIONS[direction][0],
@@ -84,7 +119,7 @@ def write_map(
     }
     map = rows.copy()
     for y, row in enumerate(rows):
-        for x, cell in enumerate(row):
+        for x, _ in enumerate(row):
             if (x, y) == current_coordinates:
                 map[y] = map[y][:x] + directions[direction] + map[y][x + 1 :]
             elif (x, y) in walked_coordinates or (
@@ -95,41 +130,6 @@ def write_map(
     with open(MAP_PATH, "w", encoding="utf-8") as f:
         f.write("\n".join(map))
     return map
-
-
-def main_part_two(problem_input: str) -> Any:
-    rows = problem_input.splitlines()
-
-    loops_counter = 0
-
-    #  Insert an obstacle in every empty cell and check if we are in a loop
-    for y, row in enumerate(rows):
-        for x, cell in enumerate(row):
-            if cell == "#" or cell == "^":
-                continue
-
-            current_coordinates = _find_starting_coordinates(rows)
-            direction = "up"
-            walked_coordinates = set()
-            walked_coordinates.add((current_coordinates, direction))
-            alternative_map = _alter_map(rows, (x, y), "#")
-            while True:
-                tentative_new_coordinates = _find_next_destination(
-                    current_coordinates, direction
-                )
-                # If we are about to get back to a point already visited, with
-                # the same direction, we are in a loop
-                if (tentative_new_coordinates, direction) in walked_coordinates:
-                    loops_counter += 1
-                    break
-                if _is_out_of_bounds(alternative_map, tentative_new_coordinates):
-                    break
-                if _is_obstacle(alternative_map, tentative_new_coordinates):
-                    direction = _turn_right(direction)
-                else:
-                    current_coordinates = tentative_new_coordinates
-                    walked_coordinates.add((current_coordinates, direction))
-    return loops_counter
 
 
 def _alter_map(
