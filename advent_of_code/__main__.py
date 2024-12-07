@@ -12,7 +12,8 @@ from advent_of_code import (
     CURRENT_EDITION,
     MODULE_DIR,
     MODULE_NAME,
-    SOLUTION_TEMPLATE_PATH,
+    TEMPLATE_SOLUTION_PATH,
+    TEMPLATE_TESTS_PATH,
 )
 
 
@@ -38,8 +39,11 @@ def main():
     folder = Folder(args.user, args.day, args.year)
     if args.create:
         _create_day_user_files(folder.file_path)
-        _write_solution_placeholder(
-            folder.file_path, folder.user, folder.day, folder.year
+        _populate_day_user_files(
+            folder.file_path,
+            folder.user,
+            folder.day,
+            folder.year,
         )
     elif args.test:
         pytest.main(folder.file_path / "tests.py")
@@ -86,15 +90,20 @@ def _parse_args():
 
 def _create_day_user_files(user_dir: Path) -> None:
     user_dir.mkdir(parents=True, exist_ok=True)
-    for file_name in ["solution.py", "tests.py", "input.txt"]:
+    for file_name in ["solution.py", "tests.py", "input.txt", "sample_input.txt"]:
         (user_dir / file_name).touch()
 
 
-def _write_solution_placeholder(user_dir: Path, user: str, day: int, year: int) -> None:
-    file = open(user_dir / "solution.py", "w", encoding="utf-8")
-    content = SOLUTION_TEMPLATE_PATH.read_text().format(user=user, day=day, year=year)
-    file.write(content)
-    file.close()
+def _populate_day_user_files(user_dir: Path, user: str, day: int, year: int) -> None:
+    files = {
+        "solution.py": TEMPLATE_SOLUTION_PATH,
+        "tests.py": TEMPLATE_TESTS_PATH,
+    }
+    for file_name, template_path in files.items():
+        file = open(user_dir / file_name, "w", encoding="utf-8")
+        content = template_path.read_text().format(user=user, day=day, year=year)
+        file.write(content)
+        file.close()
 
 
 def _derive_function_name(part: int | None) -> str:
