@@ -100,7 +100,9 @@ def write_map(
 def main_part_two(problem_input: str) -> Any:
     rows = problem_input.splitlines()
 
-    counter = 0
+    loops_counter = 0
+
+    #  Insert an obstacle in every empty cell and check if we are in a loop
     for y, row in enumerate(rows):
         for x, cell in enumerate(row):
             if cell == "#" or cell == "^":
@@ -115,8 +117,10 @@ def main_part_two(problem_input: str) -> Any:
                 tentative_new_coordinates = _find_next_destination(
                     current_coordinates, direction
                 )
+                # If we are about to get back to a point already visited, with
+                # the same direction, we are in a loop
                 if (tentative_new_coordinates, direction) in walked_coordinates:
-                    counter += 1
+                    loops_counter += 1
                     break
                 if _is_out_of_bounds(alternative_map, tentative_new_coordinates):
                     break
@@ -125,7 +129,7 @@ def main_part_two(problem_input: str) -> Any:
                 else:
                     current_coordinates = tentative_new_coordinates
                     walked_coordinates.add((current_coordinates, direction))
-    return counter
+    return loops_counter
 
 
 def _alter_map(
