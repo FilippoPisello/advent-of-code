@@ -4,9 +4,19 @@ from pathlib import Path
 
 import pytest
 
-from advent_of_code.y2024.day8.filippo.solution import main_part_one, main_part_two
+from advent_of_code.y2024.day8.filippo.solution import (
+    _calculate_antinodes_coordinates,
+    main_part_one,
+    main_part_two,
+)
 
 SAMPLE_INPUT_PATH = Path(__file__).resolve().parent / "sample_input.txt"
+
+
+def test_antinodes():
+    actual = _calculate_antinodes_coordinates(((4, 3), (5, 5)))
+    expected = [(6, 7), (3, 1)]
+    assert actual == expected
 
 
 @pytest.mark.parametrize(
