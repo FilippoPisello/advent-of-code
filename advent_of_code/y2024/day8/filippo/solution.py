@@ -69,27 +69,16 @@ def _calculate_antinodes_coordinates_line(
     distances = (pair[1][0] - pair[0][0], pair[1][1] - pair[0][1])
     antinodes = set(pair)
 
-    multiplier = 1
-    while True:
-        antinode = (
-            pair[1][0] + distances[0] * multiplier,
-            pair[1][1] + distances[1] * multiplier,
-        )
-        if not _is_coordinate_in_bounds(antinode, max_x, max_y):
-            break
-        antinodes.add(antinode)
-        multiplier += 1
-
-    multiplier = -1
-    while True:
-        antinode = (
-            pair[0][0] + distances[0] * multiplier,
-            pair[0][1] + distances[1] * multiplier,
-        )
-        if not _is_coordinate_in_bounds(antinode, max_x, max_y):
-            break
-        antinodes.add(antinode)
-        multiplier += -1
+    for multiplier, starting_point in ((1, pair[1]), (-1, pair[0])):
+        while True:
+            antinode = (
+                starting_point[0] + distances[0] * multiplier,
+                starting_point[1] + distances[1] * multiplier,
+            )
+            if not _is_coordinate_in_bounds(antinode, max_x, max_y):
+                break
+            antinodes.add(antinode)
+            multiplier += 1 if multiplier > 0 else -1
 
     return antinodes
 
