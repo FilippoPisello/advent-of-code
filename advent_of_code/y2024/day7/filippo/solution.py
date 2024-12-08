@@ -18,7 +18,6 @@ def main(
 
         actual_result = [factors[0]]
         for factor in factors[1:]:
-            print(f"{actual_result}")
             actual_result = sum(
                 (operation(actual_result, factor) for operation in operations), []
             )
