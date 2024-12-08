@@ -5,18 +5,13 @@ from pathlib import Path
 import pytest
 
 from advent_of_code.y2024.day8.filippo.solution import (
-    _calculate_antinodes_coordinates,
+    _calculate_antinodes_coordinates_spot,
     main_part_one,
     main_part_two,
 )
 
 SAMPLE_INPUT_PATH = Path(__file__).resolve().parent / "sample_input.txt"
-
-
-def test_antinodes():
-    actual = _calculate_antinodes_coordinates(((4, 3), (5, 5)))
-    expected = [(6, 7), (3, 1)]
-    assert actual == expected
+SAMPLE_INPUT_2_PATH = Path(__file__).resolve().parent / "sample_input_2.txt"
 
 
 @pytest.mark.parametrize(
@@ -32,13 +27,16 @@ def test_cases_part_one(problem_input, expected):
     assert main_part_one(problem_input) == expected
 
 
-@pytest.mark.skip("Not implemented yet")
 @pytest.mark.parametrize(
     ("problem_input", "expected"),
     (
         (
             SAMPLE_INPUT_PATH.read_text(),
-            "expected_result_part_one",
+            34,
+        ),
+        (
+            SAMPLE_INPUT_2_PATH.read_text(),
+            9,
         ),
     ),
 )
