@@ -78,7 +78,58 @@ def _is_out_of_bounds(rows: list[str], coordinates: tuple[int, int]) -> bool:
 
 
 def main_part_two(problem_input: str) -> Any:
-    return
+    rows = [line for line in problem_input.splitlines() if line]
+    trailheads_coordinates = _find_trailheads(rows)
+
+    total_score = 0
+    for x, y in trailheads_coordinates:
+        reachable_peaks_trails = _find_reachable_peaks_trails(x, y, rows)
+        total_score += len(reachable_peaks_trails)
+    return total_score
+
+
+Trail = tuple[list[Coordinates], bool]
+
+
+def _find_reachable_peaks_trails(
+    start_x: int, start_y: int, rows: list[str]
+) -> list[tuple[Coordinates]]:
+    paths: list[Trail] = [
+        ([(start_x, start_y)], True),
+    ]
+    while [path for path, active in paths if active]:
+        for index, (walked_locations, active) in enumerate(paths):
+            if not active:
+                continue
+
+            paths.pop(index)
+            x, y = walked_locations[-1]
+            for direct in DIRECTIONS:
+                target_location = (x + direct[0], y + direct[1])
+                if _is_out_of_bounds(rows, target_location):
+                    continue
+                if target_location in walked_locations:
+                    continue
+
+                # In test cases there might be a dot instead of a number, not
+                # a valid location
+                try:
+                    target_height = int(rows[target_location[1]][target_location[0]])
+                except ValueError:
+                    continue
+
+                current_height = int(rows[y][x])
+                if target_height - current_height == 1:
+                    if target_height == 9:
+                        paths.append(
+                            (walked_locations + [target_location, (-1, -1)], False)
+                        )
+                    else:
+                        paths.append((walked_locations + [target_location], True))
+                else:
+                    continue
+
+    return {tuple(path) for path, _ in paths if (-1, -1) in path}
 
 
 # def main(problem_input: str) -> Any:

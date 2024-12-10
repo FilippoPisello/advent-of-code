@@ -37,15 +37,38 @@ def test_cases_part_one(problem_input, expected):
     assert main_part_one(problem_input) == expected
 
 
-@pytest.mark.skip
 @pytest.mark.parametrize(
     ("problem_input", "expected"),
     (
         (
+            """
+            ..90..9
+            ...1.98
+            ...2..7
+            6543456
+            765.987
+            876....
+            987....
+            """,
+            13,
+        ),
+        (
+            """
+            012345
+            123456
+            234567
+            345678
+            4.6789
+            56789.
+            """,
+            227,
+        ),
+        (
             SAMPLE_INPUT_PATH.read_text(),
-            "expected_result_part_one",
+            81,
         ),
     ),
 )
 def test_cases_part_two(problem_input, expected):
+    problem_input = problem_input.replace(" ", "")
     assert main_part_two(problem_input) == expected
