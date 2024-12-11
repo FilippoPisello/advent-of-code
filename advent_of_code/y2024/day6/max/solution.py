@@ -67,7 +67,6 @@ def _explore(
     return row - direction_row, column - direction_column, grid, True
 
 
-# can't manage this one...
 def main_part_two(problem_input: str) -> Any:
     lines = problem_input.splitlines()
     grid = [list(line) for line in lines]
