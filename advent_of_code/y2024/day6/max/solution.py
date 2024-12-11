@@ -1,6 +1,6 @@
 """Solution for day 6 of Advent of Code 2024, by max."""
 
-from typing import Any
+from typing import Any, List, Tuple
 import copy
 
 
@@ -24,14 +24,14 @@ def main_part_one(problem_input: str) -> Any:
     return sum(row.count("X") for row in grid)
 
 
-def _find_starting_point(grid: list[list[str]]) -> tuple[int, int]:
+def _find_starting_point(grid: List[List[str]]) -> Tuple[int, int]:
     for row in range(len(grid)):
         for column in range(len(grid[0])):
             if grid[row][column] == "^":
                 return row, column
 
 
-def _change_direction(direction: str) -> tuple[int, int]:
+def _change_direction(direction: str) -> Tuple[int, int]:
     next_direction = {
         "top": "right",
         "right": "bottom",
@@ -42,26 +42,28 @@ def _change_direction(direction: str) -> tuple[int, int]:
     return next_direction[direction]
 
 
+def _is_valid(grid: List[List[int]], row: int, column: int) -> bool:
+    if 0 <= row < len(grid) and 0 <= column < len(grid[0]):
+        return True
+    return False
+
+
 def _explore(
     grid: list[list[str]],
     row: int,
     column: int,
     direction_row: int,
     direction_column: int,
-) -> tuple[int, int]:
+) -> Tuple[int, int]:
+
     row, column = row + direction_row, column + direction_column
 
-    while (
-        0 <= row < len(grid)
-        and 0 <= column < len(grid[0])
-        and (grid[row][column] in (".", "X", "^"))
-    ):
-        print(f"Coordinates row {row}, colum {column}, value {grid[row][column]}")
+    while _is_valid(grid, row, column) and (grid[row][column] in (".", "X", "^")):
         grid[row][column] = "X"
         row += direction_row
         column += direction_column
 
-    if not (0 <= row < len(grid) and 0 <= column < len(grid[0])):
+    if not (_is_valid(grid, row, column)):
         return row, column, grid, False
 
     return row - direction_row, column - direction_column, grid, True
@@ -70,101 +72,48 @@ def _explore(
 def main_part_two(problem_input: str) -> Any:
     lines = problem_input.splitlines()
     grid = [list(line) for line in lines]
+
+    loops_count = 0
+
+    for x in range(len(grid)):
+        for y in range(len(grid[0])):
+            loops_count += _explore2(grid, x, y)
+
+    return loops_count
+
+
+def _explore2(grid, x, y):
     directions = {"top": (-1, 0), "right": (0, 1), "bottom": (1, 0), "left": (0, -1)}
+    explored = set()
+    new_grid = [row[:] for row in grid]
 
+    if new_grid[x][y] == "^":
+        return 0
+
+    new_grid[x][y] = "#"
+
+    row, column = _find_starting_point(new_grid)
     direction = "top"
-    start_row, start_column = _find_starting_point(grid)
-    row, column = start_row, start_column
     direction_row, direction_column = directions[direction]
-    can_explore = True
-    loops_count = 0
 
-    while can_explore:
-        loops_count += _obstable(
-            copy.deepcopy(grid), row, column, directions, start_row, start_column
-        )
-
-        if 0 <= row + direction_row < len(grid) and 0 <= column + direction_row < len(
-            grid[0]
-        ):
-            if grid[row + direction_row][column + direction_column] in (".", "^"):
-                row += direction_row
-                column += direction_column
-
-            else:
-                direction = _change_direction(direction)
-                direction_row, direction_column = directions[direction]
-
-        else:
-            can_explore = False
-
-    return loops_count
-
-
-def _obstable(start_grid, row, column, directions, start_row, start_column):
-    loops_count = 0
-
-    for obstable_row, obstacle_column in directions.values():
-        grid = copy.deepcopy(start_grid)
-
-        if not (
-            0 <= row + obstable_row < len(grid)
-            and 0 <= column + obstacle_column < len(grid[0])
-        ):
-            break
-
-        grid[row + obstable_row][column + obstacle_column] = "0"
-
-        direction = "top"
-        direction_row, direction_column = directions[direction]
-        can_explore = True
-        node_count = 0
-
-        while can_explore and node_count < 4:
-            start_row, start_column, can_explore, node_count = _explore2(
-                grid,
-                start_row,
-                start_column,
-                direction_row,
-                direction_column,
-                node_count,
-            )
-            if can_explore:
-                grid[start_row][start_column] = "+"
-                direction = _change_direction(direction)
-                direction_row, direction_column = directions[direction]
-
-        if node_count > 3:
-            loops_count += 1
-
-    return loops_count
-
-
-def _explore2(
-    grid: list[list[str]],
-    row: int,
-    column: int,
-    direction_row: int,
-    direction_column: int,
-    node_count: int,
-) -> tuple[int, int]:
-    row, column = row + direction_row, column + direction_column
-
-    while (
-        0 <= row < len(grid)
-        and 0 <= column < len(grid[0])
-        and (grid[row][column] in (".", "^", "+"))
-    ):
-        if grid[row][column] == "+":
-            node_count += 1
-
+    while True:
         row += direction_row
         column += direction_column
 
-    if not (0 <= row < len(grid) and 0 <= column < len(grid[0])):
-        return row, column, False, node_count
+        current_state = ((row, column), direction)
+        if current_state in explored:
+            return 1
 
-    return row - direction_row, column - direction_column, True, node_count
+        if not _is_valid(new_grid, row, column):
+            return 0
+
+        if new_grid[row][column] in (".", "^"):
+            explored.add(current_state)
+        else:
+            row -= direction_row
+            column -= direction_column
+            direction = _change_direction(direction)
+            direction_row, direction_column = directions[direction]
 
 
 # def main(problem_input: str) -> Any:
