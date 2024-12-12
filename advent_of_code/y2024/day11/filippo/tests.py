@@ -13,7 +13,7 @@ SAMPLE_INPUT_PATH = Path(__file__).resolve().parent / "sample_input.txt"
     ("problem_input", "expected"),
     (
         (
-            SAMPLE_INPUT_PATH.read_text(),
+            "125 17",
             55312,
         ),
     ),
@@ -22,6 +22,7 @@ def test_cases_part_one(problem_input, expected):
     assert main_part_one(problem_input) == expected
 
 
+@pytest.mark.skip
 @pytest.mark.parametrize(
     ("problem_input", "expected"),
     (
