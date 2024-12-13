@@ -33,10 +33,10 @@ def first_step(disk_map):
     disk_map_1_step = []
     for index, file in enumerate(disk_map):
         if index % 2 == 0:
-            for i in range(int(file)):
+            for _ in range(int(file)):
                 disk_map_1_step.append(round(index / 2))
         else:
-            for i in range(int(file)):
+            for _ in range(int(file)):
                 disk_map_1_step.append(-1)
     return disk_map_1_step
 
