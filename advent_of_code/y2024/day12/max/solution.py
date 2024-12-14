@@ -80,16 +80,6 @@ def _evaluate_suroundings(grid: List[List[str]], row: int, col: int, value: str)
 
 
 def main_part_two(problem_input: str) -> Any:
-    inputs = problem_input.splitlines()
-    grid = _make_unique_regions([list(line) for line in inputs])
-
-    garden = {}
-
-    for row in range(len(grid)):
-        for col in range(len(grid[0])):
-            value = grid[row][col]
-            garden[value] = garden.get(value, 0) + 1
-
     return
 
 
