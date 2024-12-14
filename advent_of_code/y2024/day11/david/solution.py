@@ -1,7 +1,6 @@
 """Solution for day 11 of Advent of Code 2024, by david."""
 
 from typing import Any
-import re
 import math
 
 
