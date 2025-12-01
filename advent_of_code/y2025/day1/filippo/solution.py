@@ -16,7 +16,25 @@ def main_part_one(problem_input: str) -> Any:
 
 
 def main_part_two(problem_input: str) -> Any:
-    return
+    position = 50
+    pass_on_zero = 0
+    for line in problem_input.splitlines():
+        direction, ticks_moved = line[0], int(line[1:])
+        sign = 1 if direction == "R" else -1
+        new_unconstrained_position = position + sign * ticks_moved
+        new_position = new_unconstrained_position % 100
+
+        if sign == 1:
+            pass_on_zero += new_unconstrained_position // 100
+        else:
+            pass_on_zero += (
+                (new_unconstrained_position <= 0)
+                + (abs(new_unconstrained_position) // 100)
+                - (position == 0)
+            )
+
+        position = new_position
+    return pass_on_zero
 
 
 # def main(problem_input: str) -> Any:
