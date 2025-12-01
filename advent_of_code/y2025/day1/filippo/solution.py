@@ -28,8 +28,11 @@ def main_part_two(problem_input: str) -> Any:
             pass_on_zero += new_unconstrained_position // 100
         else:
             pass_on_zero += (
+                # If we hit or crossed zero, count
                 (new_unconstrained_position <= 0)
+                # Count how many hundreds we crossed
                 + (abs(new_unconstrained_position) // 100)
+                # If we started at zero, we already counted it, so subtract one
                 - (position == 0)
             )
 
