@@ -10,10 +10,12 @@
             "request": "launch",
             "module": "advent_of_code",
             "args": [
-                "8",
-                "david",
+                "1", // The day number
+                "your_name", // Replace with your actual name
                 "--part",
-                "1"
+                "1", // Change to "2" for part two
+                "--year",
+                "2025" // Change to the desired year
             ]
         }
     ]
