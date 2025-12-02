@@ -24,9 +24,11 @@ def test_cases_part_one(problem_input, expected):
 @pytest.mark.parametrize(
     ("problem_input", "expected"),
     (
+        ("95-115", 99 + 111),
+        ("824824821-824824827", 824824824),
         (
             SAMPLE_INPUT_PATH.read_text(),
-            "expected_result_part_one",
+            4174379265,
         ),
     ),
 )
