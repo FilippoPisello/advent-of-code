@@ -40,8 +40,11 @@ def main_part_two(problem_input: str) -> Any:
 def _is_invalid_any_split(id_: int) -> bool:
     id_str = str(id_)
     for divider in range(2, len(id_str) + 1):
+        # Only consider dividers that split the string evenly
         if len(id_str) % divider == 0:
+            # Split in n equal parts
             splits = re.findall("." * (len(id_str) // divider), id_str)
+            # Is invalid if all parts are equal
             if all(s == splits[0] for s in splits):
                 return True
     return False
