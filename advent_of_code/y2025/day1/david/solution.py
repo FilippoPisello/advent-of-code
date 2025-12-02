@@ -1,4 +1,4 @@
-import math
+"""Solution for day 1 of Advent of Code 2025, by david."""
 
 
 def main_part_one(problem_input: str) -> None:
