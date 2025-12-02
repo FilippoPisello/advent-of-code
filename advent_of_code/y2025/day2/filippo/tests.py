@@ -12,10 +12,9 @@ SAMPLE_INPUT_PATH = Path(__file__).resolve().parent / "sample_input.txt"
 @pytest.mark.parametrize(
     ("problem_input", "expected"),
     (
-        (
-            SAMPLE_INPUT_PATH.read_text(),
-            "expected_result_part_one",
-        ),
+        (SAMPLE_INPUT_PATH.read_text(), 1227775554),
+        ("11-22", 33),
+        ("11-22,11-22", 66),
     ),
 )
 def test_cases_part_one(problem_input, expected):
