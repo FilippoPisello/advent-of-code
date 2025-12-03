@@ -13,7 +13,7 @@ def main_part_one(problem_input: str) -> Any:
         sign = 1 if letter == "R" else -1
         dial += sign * number
         dial = dial % 100
-
+  
         ends_on_zero_count += 1 if dial == 0 else 0
 
     return ends_on_zero_count
@@ -30,7 +30,7 @@ def main_part_two(problem_input: str) -> Any:
         sign = 1 if letter == "R" else -1
         dial += sign * number
 
-        rotations = max(abs(dial) // 100 + (dial <= 0) - (previous_dial == 0), 0)
+        rotations = max(abs(dial) // 100 + (dial<=0) - (previous_dial==0 and sign==-1),0)
         pass_on_zero_count += rotations
         dial = dial % 100
     return pass_on_zero_count
