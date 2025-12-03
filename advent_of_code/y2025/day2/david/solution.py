@@ -41,7 +41,6 @@ def main_part_two(problem_input: str) -> Any:
                     ]
                     if len(set(split_list)) == 1:
                         counter += id
-                        print(id)
                         break
 
     print(counter)
