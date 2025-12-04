@@ -23,10 +23,9 @@ def main_part_two(problem_input: str) -> int:
         letter, number = line[0], int(line[1:])
         sign = 1 if letter == 'R' else -1
         new_position = position + sign * number
-        password += abs(new_position) // 100
-
+        password += abs(new_position) // 100 
         if sign < 0:
-            password += (new_position <= 0)- (position == 0)
+            password += (new_position <= 0) - (position == 0)
 
         position = new_position % 100
 
