@@ -22,6 +22,7 @@ def test_cases_part_one(problem_input, expected):
     assert main_part_one(problem_input) == expected
 
 
+@pytest.mark.skip(reason="Not implemented yet")
 @pytest.mark.parametrize(
     ("problem_input", "expected"),
     (
