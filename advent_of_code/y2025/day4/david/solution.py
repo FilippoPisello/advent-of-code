@@ -1,4 +1,4 @@
-"""Solution for day 4 of Advent of Code 2025, by david."""
+"""Solution for day 4 of Advent of Code 2025, by david. yes"""
 
 from typing import Any
 
