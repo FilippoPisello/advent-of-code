@@ -14,7 +14,7 @@ SAMPLE_INPUT_PATH = Path(__file__).resolve().parent / "sample_input.txt"
     (
         (
             SAMPLE_INPUT_PATH.read_text(),
-            "expected_result_part_one",
+            3,
         ),
     ),
 )
@@ -27,7 +27,7 @@ def test_cases_part_one(problem_input, expected):
     (
         (
             SAMPLE_INPUT_PATH.read_text(),
-            "expected_result_part_one",
+            14,
         ),
     ),
 )
