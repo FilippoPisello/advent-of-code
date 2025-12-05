@@ -18,7 +18,17 @@ def main_part_one(problem_input: str) -> Any:
 
 
 def main_part_two(problem_input: str) -> Any:
-    return
+    ranges, ids = problem_input.split("\n\n")
+    int_ranges = [
+        range(int(line.split("-")[0]), int(line.split("-")[1]) + 1)
+        for line in ranges.splitlines()
+    ]
+    fresh_ids = set()
+
+    for range_ in int_ranges:
+        fresh_ids.update(range_)
+
+    return len(fresh_ids)
 
 
 # def main(problem_input: str) -> Any:
