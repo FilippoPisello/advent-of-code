@@ -2,7 +2,7 @@
 
 from typing import Any
 
-
+# FUCK FILIPPO
 def main_part_one(problem_input: str) -> Any:
     fresh_range, ingredients = format_input(problem_input)
     fresh_range_dict = fresh_range_better(fresh_range)
