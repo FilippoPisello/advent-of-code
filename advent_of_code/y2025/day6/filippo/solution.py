@@ -25,12 +25,29 @@ def main_part_one(problem_input: str) -> Any:
 
 
 def main_part_two(problem_input: str) -> Any:
+    total = 0
     values: dict[int, list[int]] = {}
     problems = []
 
-    split_value_columns(problem_input)
+    lines = problem_input.splitlines()
+    signs = extract_signs(lines[-1])
 
-    return sum(problems)
+    for values, sign in zip(split_value_columns(problem_input), signs, strict=True):
+        recoded_values = recode_values(values)
+
+        if sign == "+":
+            total += sum(recoded_values)
+        elif sign == "*":
+            prod = 1
+            for v in recoded_values:
+                prod *= v
+            total += prod
+
+    return total
+
+
+def extract_signs(line: str):
+    return [char.strip() for char in line.split() if char.strip()]
 
 
 def split_value_columns(problem_input: str) -> list[list[str]]:
@@ -47,21 +64,20 @@ def split_value_columns(problem_input: str) -> list[list[str]]:
             else:
                 segment_end = index - 1
             extracted_col = [line[segment_start:segment_end] for line in lines[:-1]]
-            print(extracted_col)
             raw_value_columns.append(extracted_col)
             starting_index = index
     return raw_value_columns
 
 
-def recode_values(raw_values: list[int]) -> list[int]:
+def recode_values(raw_values: list[str]) -> list[int]:
     destructured_values: list[dict[int, str]] = []
     max_index = 0
 
     for value in raw_values:
         index_map = {}
 
-        for index, digit in enumerate(str(value)):
-            index_map[index] = digit
+        for index, digit_ in enumerate(str(value)):
+            index_map[index] = digit_
             if index > max_index:
                 max_index = index
         destructured_values.append(index_map)
