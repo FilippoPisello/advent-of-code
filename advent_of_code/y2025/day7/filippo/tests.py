@@ -4,9 +4,42 @@ from pathlib import Path
 
 import pytest
 
-from advent_of_code.y2025.day7.filippo.solution import main_part_one, main_part_two
+from advent_of_code.y2025.day7.filippo.solution import (
+    main_part_one,
+    main_part_two,
+    propagate_ray,
+)
 
 SAMPLE_INPUT_PATH = Path(__file__).resolve().parent / "sample_input.txt"
+
+
+@pytest.mark.parametrize(
+    ("previous_line", "line", "expected"),
+    (
+        (
+            ".......|.......",
+            "...............",
+            ".......|.......",
+        ),
+        (
+            "...|...|.......",
+            "...............",
+            "...|...|.......",
+        ),
+        (
+            ".......|.......",
+            ".......^.......",
+            "......|^|......",
+        ),
+        (
+            "..|^|^|||^|^|..",
+            "...............",
+            "..|.|.|||.|.|..",
+        ),
+    ),
+)
+def test_propagate_ray(previous_line, line, expected):
+    assert propagate_ray(line, previous_line)[0] == expected
 
 
 @pytest.mark.parametrize(
