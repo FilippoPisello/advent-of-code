@@ -34,7 +34,35 @@ def propagate_ray(line: str, previous_line: str) -> tuple[str, int]:
 
 
 def main_part_two(problem_input: str) -> Any:
-    return
+    problem_input = problem_input.replace("S", "|")
+
+    previous_line = problem_input.splitlines()[0]
+    timelines = {previous_line.index("|"): 1}
+
+    for line in problem_input.splitlines()[1:]:
+        new_timelines = {}
+        for timeline_position, counter in timelines.items():
+            new_positions = propagate_timeline(line, timeline_position)
+            for new_position in new_positions:
+                if new_position in new_timelines:
+                    new_timelines[new_position] += counter
+                else:
+                    new_timelines[new_position] = counter
+        timelines = new_timelines
+
+    return sum(timelines.values())
+
+
+def propagate_timeline(line: str, timeline_position: int) -> list[int]:
+    new_positions = []
+    if line[timeline_position] == "^":
+        if timeline_position > 0:
+            new_positions.append(timeline_position - 1)
+        if timeline_position < len(line) - 1:
+            new_positions.append(timeline_position + 1)
+    elif line[timeline_position] == ".":
+        new_positions.append(timeline_position)
+    return new_positions
 
 
 # def main(problem_input: str) -> Any:
