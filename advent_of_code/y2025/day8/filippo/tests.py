@@ -38,13 +38,12 @@ def test_cases_part_one(problem_input, expected):
     assert main_part_one(problem_input, 10) == expected
 
 
-@pytest.mark.skip("Remove this line once part two is implemented")
 @pytest.mark.parametrize(
     ("problem_input", "expected"),
     (
         (
             SAMPLE_INPUT_PATH.read_text(),
-            "expected_result_part_one",
+            25272,
         ),
     ),
 )

@@ -84,7 +84,48 @@ def count_groups(connected_boxes: dict[Box, int | None]) -> dict[int, int]:
 
 
 def main_part_two(problem_input: str) -> Any:
-    return
+    boxes = parse_boxes(problem_input)
+
+    distance_matrix = compute_distances(list(boxes.keys()))
+    sorted_distance_pairs = sorted(
+        distance_matrix.keys(), key=lambda item: distance_matrix[item]
+    )
+    _, last_connection = form_connections_unlimited(boxes, sorted_distance_pairs)
+
+    return last_connection[0][0] * last_connection[1][0]
+
+
+def form_connections_unlimited(
+    boxes: dict[Box, int | None],
+    sorted_distance_pairs: list[tuple[Box, Box]],
+) -> tuple[dict[Box, int | None], tuple[Box, Box]]:
+    connected_boxes = boxes.copy()
+
+    last_connection = sorted_distance_pairs[0]
+    group_id = 0
+    while None in connected_boxes.values():
+        for box1, box2 in sorted_distance_pairs:
+            if connected_boxes[box1] is None and connected_boxes[box2] is None:
+                last_connection = (box1, box2)
+                connected_boxes[box1] = group_id
+                connected_boxes[box2] = group_id
+                group_id += 1
+            elif connected_boxes[box1] is not None and connected_boxes[box2] is None:
+                last_connection = (box1, box2)
+                connected_boxes[box2] = connected_boxes[box1]
+            elif connected_boxes[box1] is None and connected_boxes[box2] is not None:
+                last_connection = (box1, box2)
+                connected_boxes[box1] = connected_boxes[box2]
+            # If both boxes are already connected, merge them and keep lowest group id
+            elif connected_boxes[box1] != connected_boxes[box2]:
+                last_connection = (box1, box2)
+                id_to_keep = min(connected_boxes[box1], connected_boxes[box2])
+                id_to_update = max(connected_boxes[box1], connected_boxes[box2])
+                for box in connected_boxes:
+                    if connected_boxes[box] == id_to_update:
+                        connected_boxes[box] = id_to_keep
+
+    return connected_boxes, last_connection
 
 
 # def main(problem_input: str) -> Any:
