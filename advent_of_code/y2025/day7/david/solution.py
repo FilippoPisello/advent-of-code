@@ -27,8 +27,6 @@ def main_part_two(problem_input: str) -> Any:
     num_rows = len(manifold)
     num_cols = len(manifold[0])
 
-    # 2. Create the new zero grid using nested list comprehension
-    # The outer loop iterates over rows, and the inner loop creates a row of zeros.
     quantum_grid = [[0 for _ in range(num_cols)] for _ in range(num_rows)]
     quantum_grid[1][start_index] = 1
 
