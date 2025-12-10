@@ -4,9 +4,43 @@ from pathlib import Path
 
 import pytest
 
-from advent_of_code.y2025.day10.filippo.solution import main_part_one, main_part_two
+from advent_of_code.y2025.day10.filippo.solution import (
+    apply_button,
+    main_part_one,
+    main_part_two,
+    parse_buttons,
+)
 
 SAMPLE_INPUT_PATH = Path(__file__).resolve().parent / "sample_input.txt"
+
+
+@pytest.mark.parametrize(
+    ("config", "expected"),
+    (
+        (
+            "[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}",
+            {(3,), (1, 3), (2,), (2, 3), (0, 2), (0, 1)},
+        ),
+        (
+            "[.###.#] (0,1,2,3,4) (0,3,4) (0,1,2,4,5) (1,2) {10,11,11,5,10,5}",
+            {(0, 1, 2, 3, 4), (0, 3, 4), (0, 1, 2, 4, 5), (1, 2)},
+        ),
+    ),
+)
+def test_parse_buttons(config, expected):
+    assert parse_buttons(config) == expected
+
+
+@pytest.mark.parametrize(
+    ("state", "button", "expected"),
+    (
+        ("....", (3,), "...#"),
+        ("...#", (3,), "...."),
+        ("....", (1, 2), ".##."),
+    ),
+)
+def test_apply_buttons(state, button, expected):
+    assert apply_button(state, button) == expected
 
 
 @pytest.mark.parametrize(
