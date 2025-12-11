@@ -10,6 +10,9 @@ def main_part_one(problem_input: str) -> Any:
 
 
 def main_part_two(problem_input: str) -> Any:
+    tiles_pairs = create_tiles_pair(problem_input)
+    # Implement part two logic here
+
     return
 
 
