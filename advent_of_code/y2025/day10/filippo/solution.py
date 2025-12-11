@@ -51,19 +51,18 @@ def apply_button(state: str, button: tuple[int, ...]) -> str:
 
 def main_part_two(problem_input: str) -> Any:
     counter = 0
-    for config in problem_input.splitlines():
-        # TODO: joltage as tuple instead of list
+    for machine_number, config in enumerate(problem_input.splitlines(), start=1):
+        print(machine_number)
         end_joltage = parse_joltage(config)
         buttons = parse_buttons(config)
 
         config_counter = 0
-        # TODO: implement as set
-        states = [[0 for _ in range(len(end_joltage))]]
-        # TODO: replace with broader pareto-inferior logic
+        states = {tuple(0 for _ in end_joltage)}
         passed_joltages = states.copy()
         while end_joltage not in states:
-            new_states: list[list[int]] = []
+            new_states: set[tuple[int, ...]] = set()
             config_counter += 1
+            print(f"Counter {config_counter},{len(states)} states")
             for state in states:
                 for button in buttons:
                     new_joltage = apply_button_on_joltage(state, button)
@@ -73,10 +72,14 @@ def main_part_two(problem_input: str) -> Any:
                         continue
                     if new_joltage in passed_joltages:
                         continue
-                    # TODO: check if joltage is pareto inferior to current
+                    if any(
+                        joltage_pareto_inferior(new_joltage, pj)
+                        for pj in passed_joltages
+                    ):
+                        continue
                     # voltages
-                    new_states.append(new_joltage)
-                    passed_joltages.append(new_joltage)
+                    new_states.add(new_joltage)
+                    passed_joltages.add(new_joltage)
             states = new_states
 
         counter += config_counter
@@ -84,21 +87,29 @@ def main_part_two(problem_input: str) -> Any:
     return counter
 
 
-def parse_joltage(config: str) -> list[int]:
+def parse_joltage(config: str) -> tuple[int, ...]:
     relevant_characters = config[config.index("{") : config.index("}")]
     simplified_characters = relevant_characters.replace("{", "").replace("}", "")
-    return list(map(int, simplified_characters.split(",")))
+    return tuple(map(int, simplified_characters.split(",")))
 
 
-def apply_button_on_joltage(joltage: list[int], button: tuple[int, ...]) -> list[int]:
-    new_joltage = joltage.copy()
+def apply_button_on_joltage(
+    joltage: tuple[int, ...], button: tuple[int, ...]
+) -> tuple[int, ...]:
+    new_joltage = list(joltage)
     for index in button:
         new_joltage[index] += 1
-    return new_joltage
+    return tuple(new_joltage)
 
 
-def joltage_beyond_target(joltage: list[int], target: list[int]) -> bool:
+def joltage_beyond_target(joltage: tuple[int, ...], target: tuple[int, ...]) -> bool:
     return any(j > t for j, t in zip(joltage, target))
+
+
+def joltage_pareto_inferior(
+    joltage: tuple[int, ...], benchmark: tuple[int, ...]
+) -> bool:
+    return all(j <= b for j, b in zip(joltage, benchmark))
 
 
 # def main(problem_input: str) -> Any:

@@ -63,11 +63,11 @@ def test_cases_part_one(problem_input, expected):
     (
         (
             "[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}",
-            [3, 5, 4, 7],
+            (3, 5, 4, 7),
         ),
         (
             "[.###.#] (0,1,2,3,4) (0,3,4) (0,1,2,4,5) (1,2) {10,11,11,5,10,5}",
-            [10, 11, 11, 5, 10, 5],
+            (10, 11, 11, 5, 10, 5),
         ),
     ),
 )
@@ -77,7 +77,13 @@ def test_parse_joltage(config, expected):
 
 @pytest.mark.parametrize(
     ("state", "button", "expected"),
-    (([0, 1, 2, 3], (1, 3), [0, 2, 2, 4]),),
+    (
+        (
+            (0, 1, 2, 3),
+            (1, 3),
+            (0, 2, 2, 4),
+        ),
+    ),
 )
 def test_apply_buttons_on_joltage(state, button, expected):
     assert apply_button_on_joltage(state, button) == expected
