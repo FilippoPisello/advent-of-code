@@ -1,6 +1,5 @@
 """Solution for day 6 of Advent of Code 2025, by max."""
 
-from functools import total_ordering
 from typing import Any
 import math
 
@@ -56,7 +55,6 @@ def main_part_two(problem_input: str) -> Any:
             operation.append(int(current_number))
 
         if operation_separator == len(grid) or col == len(grid[0]) - 1:
-            print(operation, operator)
             if operator == "+":
                 result = sum(operation)
             elif operator == "*":
