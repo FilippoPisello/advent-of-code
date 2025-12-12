@@ -1,10 +1,10 @@
-"""Tests for day 8 of Advent of Code 2025, by max."""
+"""Tests for day 9 of Advent of Code 2025, by max."""
 
 from pathlib import Path
 
 import pytest
 
-from advent_of_code.y2025.day8.max.solution import main_part_one, main_part_two
+from advent_of_code.y2025.day9.max.solution import main_part_one, main_part_two
 
 SAMPLE_INPUT_PATH = Path(__file__).resolve().parent / "sample_input.txt"
 
