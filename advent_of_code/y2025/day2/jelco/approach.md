@@ -78,9 +78,20 @@ Start with brute force since:
    - Return the sum
 
 2. **Part 2**:
-   - Wait for part 2 instructions (usually a variation of part 1)
+   - Modified rule: Pattern repeated **at least twice** (not exactly twice)
+   - Examples:
+     - `12341234` = "1234" × 2 ✓
+     - `123123123` = "123" × 3 ✓
+     - `1212121212` = "12" × 5 ✓
+     - `1111111` = "1" × 7 ✓
+   - Algorithm: Try all possible pattern lengths (1 to length/2)
+     - For each pattern length, check if number is divisible into equal repeating parts
+     - Pattern cannot start with 0
+     - Must repeat at least 2 times
 
 ## Test Cases (from problem)
+
+### Part 1
 - Range `11-22`: Invalid IDs = [11, 22]
 - Range `95-115`: Invalid IDs = [99]
 - Range `998-1012`: Invalid IDs = [1010]
@@ -88,3 +99,13 @@ Start with brute force since:
 - Range `222220-222224`: Invalid IDs = [222222]
 
 Expected sum: 1227775554
+
+### Part 2
+- Range `11-22`: Invalid IDs = [11, 22]
+- Range `95-115`: Invalid IDs = [99, 111] (111 = "1" × 3)
+- Range `998-1012`: Invalid IDs = [999, 1010] (999 = "9" × 3)
+- Range `565653-565659`: Invalid IDs = [565656] (565656 = "56" × 3)
+- Range `824824821-824824827`: Invalid IDs = [824824824] (824824824 = "824" × 3)
+- Range `2121212118-2121212124`: Invalid IDs = [2121212121] (2121212121 = "21" × 5)
+
+Expected sum: 4174379265
